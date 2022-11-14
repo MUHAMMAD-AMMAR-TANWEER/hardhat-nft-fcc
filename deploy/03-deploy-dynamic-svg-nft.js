@@ -32,7 +32,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 
     if (!developmentChains.includes(network.name) && process.env.ETHER_SCAN_API) {
         console.log("Verifying................")
-        await verify(BasicNft.address, args)
+        await verify(DynamicNft.address, args)
     }
     console.log("--------------------------------------")
 }

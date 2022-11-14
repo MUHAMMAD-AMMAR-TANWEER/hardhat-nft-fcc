@@ -4,11 +4,11 @@ const { verify } = require("../utils/verify")
 const { storeImages, storeTokenUriMetadata } = require("../utils/uploadToPinata")
 
 const FUND_AMOUNT = "1000000000000000000000"
-const imagesLocation = "./images/randomNft/"
+const imagesLocation = "./images/Randomnft/"
 let tokenUris = [
-    "ipfs://QmQL16y6RarVNfrYp7RGfF68ovbjAsyXePKjtdi9FBJRUw",
-    "ipfs://QmSMJMvN7CwNSCJpvWkpXhmB68matqFK3ZsgnyxtACE4dL",
-    "ipfs://QmUZufQGTE8W2mjrjt2SENyycjimjbCzwPC9yfaJRZ7oQk",
+    "https://gateway.pinata.cloud/ipfs/QmUopZUTM2fc5i5HyiggVUwVH2EVR1dyPGSjWpYSgJwisa",
+    "https://gateway.pinata.cloud/ipfs/QmeW816aqK9N3CpBypLWKfXA68WbTdNPnNeNBbJaiEW8h1",
+    "https://gateway.pinata.cloud/ipfs/QmSWxxJJywtTnceBeybhiNdkDyw3cJ5e2foEVQQV7Fez7E",
 ]
 // const imageUris = [
 //     "ipfs://QmSsYRx3LpDAb1GZQm7zZ1AuHZjfbPkD6J7s9r41xu1mf8",
@@ -74,8 +74,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     // Verify the deployment
-    if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
+    if (!developmentChains.includes(network.name) && process.env.ETHER_SCAN_API) {
+        console.log("Verifying................")
         await verify(randomIpfsNft.address, arguments)
     }
 }
@@ -90,10 +90,10 @@ async function handleTokenUris() {
         let tokenUriMetadata = { ...metadataTemplate }
         tokenUriMetadata.name = files[imageUploadResponseIndex].replace(".jpeg", "")
         tokenUriMetadata.description = `An Image of gratitude ${tokenUriMetadata.name} !`
-        tokenUriMetadata.image = `ipfs://${imageUploadResponses[imageUploadResponseIndex].IpfsHash}`
+        tokenUriMetadata.image = `https://gateway.pinata.cloud/ipfs/${imageUploadResponses[imageUploadResponseIndex].IpfsHash}`
         console.log(`Uploading ${tokenUriMetadata.name}...`)
         const metadataUploadResponse = await storeTokenUriMetadata(tokenUriMetadata)
-        tokenUris.push(`ipfs://${metadataUploadResponse.IpfsHash}`)
+        tokenUris.push(`https://gateway.pinata.cloud/ipfs/${metadataUploadResponse.IpfsHash}`)
     }
     console.log("Token URIs uploaded! They are:")
     console.log(tokenUris)
